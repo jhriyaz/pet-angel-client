@@ -1,0 +1,27 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.navsda{
+  height: 100vh;
+}
+.NavItems>a{
+  text-decoration: none;
+  font-weight:700;
+  color: #2c1303;
+}
+.NavItems>a:hover{
+  color: #ffffff;
+
+}
+.NavItems>.active:hover{
+  color: rgb(238, 128, 11)
+}
+.NavItems>.active{
+  border-bottom: 2px solid rgb(250, 248, 246);
+  border-top: 2px solid rgb(246, 246, 246);
+  color: rgb(238, 128, 11);
+}
+.main{
+ color:  #f4cea7
+} 
