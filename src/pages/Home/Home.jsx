@@ -1,10 +1,12 @@
-import Banner from "./Banner";
+import Banner from "./component/Banner";
+import PetCategory from "./component/PetCategory";
 
 const Home = () => {
     return (
        <>
-       <Banner className="navsda"></Banner>
-<h1>       dsadadsas</h1>
+       <Banner></Banner>
+
+<PetCategory></PetCategory>
 
        </>
     );

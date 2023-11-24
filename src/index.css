@@ -2,8 +2,9 @@
   margin: 0;
   padding: 0;
 }
-.navsda{
-  height: 100vh;
+*::selection {
+  color: rgb(255, 255, 255);
+  background:#f4cea7
 }
 .NavItems>a{
   text-decoration: none;

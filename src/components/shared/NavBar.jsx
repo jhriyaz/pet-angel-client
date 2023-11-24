@@ -16,7 +16,7 @@ const drawerWidth = 240;
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const navItems = [{name:'Home',link:'/'},{name:'About',link:'/about'},{name:'Contact',link:'/contact'} ];
+const navItems = [{name:'Home',link:'/'},{name:'Pet Listing',link:'/pet-listing'},{name:'Donation Campaigns',link:'/donation-campaigns'} ];
 
 import logo from "./../../assets/images/logo.png";
 import { Avatar, Container, Grid } from "@mui/material";
@@ -97,7 +97,7 @@ const NavBar = (props) => {
 
 
           
-           <Box className="NavItems" sx={{ display: { xs: "none", sm: "block",lg:'flex' },gap:5 }}>
+           <Box className="NavItems" sx={{ display: { xs: "none", sm: "flex",lg:'flex' ,md:'flex'},gap:3,padding:{sm:'4px'} }}>
             {navItems.map((item) => (
              <NavLink  key={item.name} to={`${item.link}`}>
                    {item.name}
@@ -106,7 +106,6 @@ const NavBar = (props) => {
           </Box>
            </Grid>
 <Grid>
-<div>
       <Button
         id="demo-positioned-button"
         aria-controls={open ? 'demo-positioned-menu' : undefined}
@@ -134,7 +133,6 @@ const NavBar = (props) => {
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
-    </div>
 </Grid>
             </Grid>
           </Toolbar>

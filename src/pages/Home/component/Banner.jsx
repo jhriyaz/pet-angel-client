@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import banner from '../../assets/images/banner.png'
-import bannerright from '../../assets/images/bannerright.png'
+import banner from '../../../assets/images/banner.png'
+import bannerright from '../../../assets/images/bannerright.png'
 import PetsIcon from '@mui/icons-material/Pets';
 const Banner = () => {
     return (
