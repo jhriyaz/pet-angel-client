@@ -1,4 +1,5 @@
 import Banner from "./component/Banner";
+import CallToAction from "./component/CallToAction";
 import PetCategory from "./component/PetCategory";
 
 const Home = () => {
@@ -7,7 +8,7 @@ const Home = () => {
        <Banner></Banner>
 
 <PetCategory></PetCategory>
-
+<CallToAction></CallToAction>
        </>
     );
 };
