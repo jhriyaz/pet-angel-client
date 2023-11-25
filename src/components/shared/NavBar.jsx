@@ -21,8 +21,13 @@ const navItems = [{name:'Home',link:'/'},{name:'Pet Listing',link:'/pet-listing'
 import logo from "./../../assets/images/logo.png";
 import { Avatar, Container, Grid } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const NavBar = (props) => {
+
+let{user}=useAuth()
+
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -106,7 +111,7 @@ const NavBar = (props) => {
           </Box>
            </Grid>
 <Grid>
-      <Button
+     {user? <Button
         id="demo-positioned-button"
         aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
@@ -114,7 +119,7 @@ const NavBar = (props) => {
         onClick={handleClick}
       >
      <Avatar alt="Profile Photo" src="/static/images/avatar/1.jpg" />
-      </Button>
+      </Button>:<Link to='/auth/login'><Button variant="outlined" color="button" sx={{border:'3px solid ',fontWeight:700,'&:hover':{border:'3px solid #D1A87D'}}}>Log In</Button></Link>}
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"

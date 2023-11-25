@@ -15,14 +15,17 @@ const CallToAction = () => {
         <>
        <SectionTittle tittle="Change a Life, Adopt a Pet Today!" desc='Welcome to Our Community of Compassionate Pet Lovers
        '></SectionTittle>
-<Container>
+<Container sx={{overflow:'hidden', paddingBottom:'10px',paddingTop:'40px'}}>
 <Grid container spacing={6}>
-<Grid lg={6} md={12} sm={12} xs={12}>
+<Grid item lg={6} md={12} sm={12} xs={12}>
 <Box>
 <Box
   component="img"
   sx={{
-    maxWidth:580,
+    maxWidth:'580px',
+    display:'flex',
+    width:'100%'
+
   }}
   alt="Adopt Help Image."
   src="https://i.ibb.co/sQSpG79/Untitled-design-4.png"
@@ -32,6 +35,7 @@ const CallToAction = () => {
 <Typography sx={{color:'#9c9b9b', paddingTop:'8px'}}>
 <span style={{background:'#f4cea7',color:'black',padding:'4px'}}>Every pet deserves a loving home.</span> By choosing to adopt, you're not just bringing an animal into your life, you're changing theirs for the better. Join us in making a difference—one paw at a time.
 </Typography>
+
 
 <Typography variant="h4" sx={{textAlign:'center',fontWeight:'bold',paddingTop:'16px'}}>
 Why Adopt?
@@ -85,7 +89,7 @@ Why Adopt?
 </Box>
 </Grid>
 
-<Grid lg={6} md={12} sm={12} xs={12}>
+<Grid item lg={6} md={12} sm={12} xs={12}>
 
 
 <Accordion expanded>

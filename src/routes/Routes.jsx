@@ -3,6 +3,8 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
 import DonationCampaigns from "../pages/DonationCampaigns/DonationCampaigns";
 import PetListing from "../pages/pet-listing/PetListing";
+import LogIn from "../pages/Auth/LogIn";
+import Register from "../pages/Auth/Register";
 
 const Routes = createBrowserRouter([
     {
@@ -18,8 +20,14 @@ const Routes = createBrowserRouter([
             },{
                 path: '/donation-campaigns',
                 element:<DonationCampaigns></DonationCampaigns>
-            }
+            },
         ]
+    },{
+        path:'/auth/login',
+        element:<LogIn></LogIn>
+    },{
+        path:'/auth/register',
+        element:<Register></Register>
     }
 ])
 

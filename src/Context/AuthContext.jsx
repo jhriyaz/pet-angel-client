@@ -55,9 +55,9 @@ useEffect(()=>{
 const unSubscribe=onAuthStateChanged(auth,currentUser=>{
   setUser(currentUser)
 
-  if(user){
-    axios.post(`${import.meta.env.VITE_URL}/jwt`,{email:user.email},{withCredentials:true}).then(data=>console.log(data))
-  }
+  // if(user){
+  //   axios.post(`${import.meta.env.VITE_URL}/jwt`,{email:user.email},{withCredentials:true}).then(data=>console.log(data))
+  // }
 
   setLoading(false)
  
