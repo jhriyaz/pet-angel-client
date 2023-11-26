@@ -4,8 +4,10 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import HomeIcon from '@mui/icons-material/Home';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialSignIn from '../../components/shared/SocialSignIn';
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'react-toastify';
 const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
@@ -19,7 +21,8 @@ const validationSchema = yup.object({
 
 const LogIn = () => {
     let navigate=useNavigate()
-
+    let from=useLocation()?.state?.from
+let {signIn}=useAuth()
     let hanleLink=(to)=>{
         navigate(to)
     }
@@ -31,7 +34,20 @@ const LogIn = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-          alert(JSON.stringify(values, null, 2));
+          let{email,password}=values
+          try{
+signIn(email,password)
+.then(()=>{
+  if(from){
+    navigate(from)
+  }else{
+    navigate('/')
+  }
+  toast.success('Successful')
+})
+          }catch(error){
+console.error(error)
+          }
         },
       });
       return (

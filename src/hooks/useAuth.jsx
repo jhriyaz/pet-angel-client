@@ -4,8 +4,8 @@ import { AuthInfo } from "../Context/AuthContext";
 
  const useAuth = () => {
     
-    let {signInWithGoogle,signInWithGithub,signInWithTwitter,signUp,user,logOut,updateProf,loading,signIn,setLoading}=useContext(AuthInfo);
+    let {signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading}=useContext(AuthInfo);
    
-     return {signInWithGoogle,signInWithGithub,signInWithTwitter,signUp,user,logOut,updateProf,loading,signIn,setLoading}
+     return {signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading}
 }
 export default useAuth;

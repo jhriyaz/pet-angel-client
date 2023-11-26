@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
 import {HelmetProvider } from 'react-helmet-async';
 import { createContext, useEffect, useState } from "react";
-import { GoogleAuthProvider,GithubAuthProvider ,TwitterAuthProvider , signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider,GithubAuthProvider  , signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-import axios from "axios";
 import { RotateSpinner } from "react-spinners-kit";
 import { auth } from "../config/__firebase__config";
 import { Grid } from "@mui/material";
@@ -12,7 +11,6 @@ import { Grid } from "@mui/material";
 export const AuthInfo = createContext(null);
 const googleProvider=new GoogleAuthProvider()
 const gitProvider = new GithubAuthProvider();
-const twitterProvider = new TwitterAuthProvider();
 const AuthContext = ({ children }) => {
   let [user,setUser]=useState(null)
   let [loading,setLoading]=useState(true)
@@ -26,10 +24,7 @@ const signInWithGithub=()=>{
 
   return signInWithPopup(auth, gitProvider)
  };
-const signInWithTwitter=()=>{
 
-  return signInWithPopup(auth, twitterProvider)
- };
  const logOut=()=>{
   setLoading(true)
   return signOut(auth)
@@ -72,14 +67,19 @@ return ()=>{
 
 
 if(loading){
- return <Grid color='button' sx={{justifyContent:'center' , alignItems:'center', display:'flex',height:'100vh'}}>
+ return<HelmetProvider>
+    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading }}>
+    <Grid color='button' sx={{justifyContent:'center' , alignItems:'center', display:'flex',height:'100vh'}}>
   <RotateSpinner />
  </Grid>
-
+      </AuthInfo.Provider>
+  </HelmetProvider>
 }
 
   return (<HelmetProvider>
-    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signInWithTwitter,signUp,user,logOut,updateProf,loading,signIn,setLoading }}>{children}</AuthInfo.Provider>
+    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading }}>
+      {children}
+      </AuthInfo.Provider>
   </HelmetProvider>)
 };
 

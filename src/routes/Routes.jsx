@@ -6,6 +6,8 @@ import PetListing from "../pages/pet-listing/PetListing";
 import LogIn from "../pages/Auth/LogIn";
 import Register from "../pages/Auth/Register";
 
+import DashBoard from "../pages/dashboard/DashBoard";
+
 const Routes = createBrowserRouter([
     {
         path: '/',
@@ -28,6 +30,9 @@ const Routes = createBrowserRouter([
     },{
         path:'/auth/register',
         element:<Register></Register>
+    },{
+        path:'/dashboard',
+        element:<DashBoard></DashBoard>
     }
 ])
 

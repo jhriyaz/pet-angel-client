@@ -15,19 +15,21 @@ import Button from "@mui/material/Button";
 const drawerWidth = 240;
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 const navItems = [{name:'Home',link:'/'},{name:'Pet Listing',link:'/pet-listing'},{name:'Donation Campaigns',link:'/donation-campaigns'} ];
 
 import logo from "./../../assets/images/logo.png";
-import { Avatar, Container, Grid } from "@mui/material";
+import { Avatar, Container, Grid, Typography } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+
 
 const NavBar = (props) => {
 
-let{user}=useAuth()
+let{user,logOut}=useAuth()
 
-
+console.log(user)
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,6 +38,21 @@ let{user}=useAuth()
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  }
+
+
+  const handleLogOut = () => {
+    try{
+      logOut()
+      .then(()=>{
+   
+    toast.success('Log Out Successful')
+      })
+     }
+     catch(error){
+    console.log(error.message)
+     }
     setAnchorEl(null);
   };
 
@@ -118,7 +135,7 @@ let{user}=useAuth()
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-     <Avatar alt="Profile Photo" src="/static/images/avatar/1.jpg" />
+     <Avatar alt="Profile Photo" src={`${user?.photoURL}`} />
       </Button>:<Link to='/auth/login'><Button variant="outlined" color="button" sx={{border:'3px solid ',fontWeight:700,'&:hover':{border:'3px solid #D1A87D'}}}>Log In</Button></Link>}
       <Menu
         id="demo-positioned-menu"
@@ -135,8 +152,11 @@ let{user}=useAuth()
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+
+<Typography sx={{padding:2,display:'flex',justifyContent:'center',alignItems: 'center',gap:1,background:'#f38005',color:'#212020'}}><AccountBoxIcon></AccountBoxIcon>{user?.displayName}</Typography>
+<Divider />
+       <Link style={{textDecoration:'none',color:'#D1A87D'}} to='dashboard'> <MenuItem onClick={handleClose}>Dashboard</MenuItem></Link>
+        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
 </Grid>
             </Grid>

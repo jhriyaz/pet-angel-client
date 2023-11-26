@@ -1,12 +1,12 @@
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import {Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import HomeIcon from "@mui/icons-material/Home";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialSignIn from "../../components/shared/SocialSignIn";
-const MAX_FILE_SIZE = 10240000; //1000KB
-
+import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
   name: yup
@@ -29,10 +29,8 @@ const validationSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Required"),
-    photoFile:yup
-    .mixed()
-      .required("Required")
-     
+    avatar:yup.string()
+    
       
 });
 
@@ -42,18 +40,42 @@ const Register = () => {
   let hanleLink = (to) => {
     navigate(to);
   };
-
+let {signUp,updateProf}=useAuth()
+let from=useLocation()?.state?.from
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
-      photoFile:""
+      photo:""
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      let{name,email,password,photo}=values
+try{
+  signUp(email,password).then(()=>{
+    updateProf(name,photo).then((data)=>{
+      console.log(data)
+      if(from){
+        navigate(from)
+      }else{
+        navigate('/')
+      }
+      toast.success('Successful')
+    })
+  })
+}catch(error){
+  console.error(error)
+}
+    
+// let phot=values.photoFile
+      // await axios.post(uri,phot,{
+      //   headers:{
+      //     "content-Type":'multipart/form-data'
+      //   }
+      // })
+      // .then(res=>console.log(res.data))
     },
   });
   return (
@@ -95,6 +117,11 @@ const Register = () => {
       >
         <form onSubmit={formik.handleSubmit}>
           <Grid sx={{ display: "grid", gap: "7px", maxWidth: "800px" }}>
+
+
+
+
+
             <TextField
               fullWidth
               id="name"
@@ -146,23 +173,23 @@ const Register = () => {
                 formik.touched.confirmPassword && formik.errors.confirmPassword
               }
             />
-
-            <TextField
+ <TextField
               fullWidth
-              id="photoFile"
-              name="photoFile"
-              type="file"
-              value={formik.values.photoFile}
+              id="photo"
+              name="photo"
+              label="link to yoor photo"
+              type="string"
+              value={formik.values.photo}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
-                formik.touched.photoFile &&
-                Boolean(formik.errors.photoFile)
+                formik.touched.photo &&
+                Boolean(formik.errors.photo)
               }
               helperText={
-                formik.touched.photoFile && formik.errors.photoFile
+                formik.touched.photo && formik.errors.photo
               }
-            ></TextField>
+            />
 
             <Typography
               sx={{ textAlign: "right", fontSize: "12px", paddingY: 1 }}
