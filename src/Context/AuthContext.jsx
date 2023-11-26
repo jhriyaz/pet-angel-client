@@ -6,6 +6,7 @@ import { GoogleAuthProvider,GithubAuthProvider  , signInWithPopup, onAuthStateCh
 import { RotateSpinner } from "react-spinners-kit";
 import { auth } from "../config/__firebase__config";
 import { Grid } from "@mui/material";
+import useAxiosIntercepter from "../hooks/useAxiosIntercepter";
 
 
 export const AuthInfo = createContext(null);
@@ -44,16 +45,18 @@ let updateProf=(name,photo)=>{
     photoURL:photo
   })
 }
-
+let AxiosCustomSecure=useAxiosIntercepter()
 
 useEffect(()=>{
 const unSubscribe=onAuthStateChanged(auth,currentUser=>{
   setUser(currentUser)
-
-  // if(user){
-  //   axios.post(`${import.meta.env.VITE_URL}/jwt`,{email:user.email},{withCredentials:true}).then(data=>console.log(data))
-  // }
-
+  let  jwt= async()=>{
+    await AxiosCustomSecure.post('/auth/jwt',{email:user.email}).then(data=>console.log(data?.data))
+    setLoading(false)
+   }
+  if(user){
+ jwt()
+  }
   setLoading(false)
  
 })
@@ -62,7 +65,7 @@ return ()=>{
   unSubscribe()
  
 }
-},[user])
+},[user,AxiosCustomSecure])
 
 
 

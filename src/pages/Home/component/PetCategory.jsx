@@ -24,7 +24,7 @@ const PetCategory = () => {
         {
           queryKey:['PetCategory'],
           queryFn:async()=>{
-           let data= await AxiosCustomPublic.get('http://localhost:6999/api/categories')
+           let data= await AxiosCustomPublic.get('/api/categories')
             return  data.data
           }
         }

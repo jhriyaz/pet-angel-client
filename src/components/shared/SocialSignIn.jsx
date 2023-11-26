@@ -4,9 +4,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAxiosIntercepter from "../../hooks/useAxiosIntercepter";
 
 const SocialSignIn = () => {
-
+let AxiosCustomSecure=useAxiosIntercepter()
 let{signInWithGoogle,signInWithGithub}=useAuth()
 
 let from=useLocation()?.state?.from
@@ -14,12 +15,19 @@ let navigate=useNavigate()
 const handleSocialSignIn=(provider)=>{
  try{
   provider()
-  .then(()=>{
-if(from){
-  navigate(from)
-}else{
-  navigate('/')
-}
+  .then((data)=>{
+
+    let{displayName:name,email}=data.user
+console.log(data)
+AxiosCustomSecure.post('/auth/users',{name,email}).then(()=>{
+  if(from){
+    navigate(from)
+  }else{
+    navigate('/')
+  }
+})
+
+
 toast.success('Successful')
   })
  }

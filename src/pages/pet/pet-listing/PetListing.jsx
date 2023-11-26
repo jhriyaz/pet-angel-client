@@ -1,4 +1,4 @@
-import SectionTittle from "../../components/shared/SectionTittle";
+import SectionTittle from "../../../components/shared/SectionTittle";
 
 const PetListing = () => {
     return (
