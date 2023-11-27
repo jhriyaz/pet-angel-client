@@ -21,7 +21,7 @@ const validationSchema = yup.object({
 
 const LogIn = () => {
     let navigate=useNavigate()
-    let from=useLocation()?.state?.from
+    let state=useLocation()?.state
 let {signIn}=useAuth()
     let hanleLink=(to)=>{
         navigate(to)
@@ -38,8 +38,8 @@ let {signIn}=useAuth()
           try{
 signIn(email,password)
 .then(()=>{
-  if(from){
-    navigate(from)
+  if(state){
+    navigate(state?.from)
   }else{
     navigate('/')
   }
@@ -86,7 +86,7 @@ console.error(error)
 
 
 <Typography sx={{textAlign:'right',fontSize:'12px',paddingY:1}} >Don't Have An account?
-<Link to='/auth/register' style={{fontSize:'14px',color:'#f38005',textDecoration:'none',fontWeight:'bold',paddingLeft:'5px'}}>Register now</Link>
+<Link to='/auth/register' state={state} style={{fontSize:'14px',color:'#f38005',textDecoration:'none',fontWeight:'bold',paddingLeft:'5px'}}>Register now</Link>
 </Typography>
 
 

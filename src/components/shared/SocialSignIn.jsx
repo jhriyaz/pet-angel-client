@@ -16,19 +16,19 @@ const handleSocialSignIn=(provider)=>{
  try{
   provider()
   .then((data)=>{
+    toast.error('Successful')
+    let{displayName:name,email,photoURL:photo}=data.user
 
-    let{displayName:name,email}=data.user
-console.log(data)
-AxiosCustomSecure.post('/auth/users',{name,email}).then(()=>{
-  if(from){
-    navigate(from)
-  }else{
-    navigate('/')
-  }
+AxiosCustomSecure.post('/auth/users',{name,email,photo}).then(()=>{
+
 })
 
+if(from){
+  navigate(from)
+}else{
+  navigate('/')
+}
 
-toast.success('Successful')
   })
  }
  catch(error){

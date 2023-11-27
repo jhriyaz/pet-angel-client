@@ -9,12 +9,15 @@ import { Grid } from "@mui/material";
 import useAxiosIntercepter from "../hooks/useAxiosIntercepter";
 
 
+
 export const AuthInfo = createContext(null);
 const googleProvider=new GoogleAuthProvider()
 const gitProvider = new GithubAuthProvider();
 const AuthContext = ({ children }) => {
   let [user,setUser]=useState(null)
   let [loading,setLoading]=useState(true)
+ const [isAdmin,setIsAdmin]=useState(false)
+
 
 
 const signInWithGoogle=()=>{
@@ -48,16 +51,24 @@ let updateProf=(name,photo)=>{
 let AxiosCustomSecure=useAxiosIntercepter()
 
 useEffect(()=>{
+
 const unSubscribe=onAuthStateChanged(auth,currentUser=>{
   setUser(currentUser)
   let  jwt= async()=>{
     await AxiosCustomSecure.post('/auth/jwt',{email:user.email}).then(data=>console.log(data?.data))
+    await AxiosCustomSecure.get('/auth/checkadmin').then(data=>{
+      setIsAdmin(data.data)
+     
+    })
     setLoading(false)
+   
    }
   if(user){
  jwt()
+  }else{
+    setLoading(false)
   }
-  setLoading(false)
+
  
 })
 return ()=>{
@@ -67,11 +78,9 @@ return ()=>{
 }
 },[user,AxiosCustomSecure])
 
-
-
 if(loading){
  return<HelmetProvider>
-    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading }}>
+    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading,isAdmin }}>
     <Grid color='button' sx={{justifyContent:'center' , alignItems:'center', display:'flex',height:'100vh'}}>
   <RotateSpinner />
  </Grid>
@@ -80,7 +89,7 @@ if(loading){
 }
 
   return (<HelmetProvider>
-    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading }}>
+    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading,isAdmin }}>
       {children}
       </AuthInfo.Provider>
   </HelmetProvider>)

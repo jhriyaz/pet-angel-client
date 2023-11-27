@@ -1,5 +1,5 @@
-import { Container, Grid, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
-import useAuth from "../../hooks/useAuth";
+import { Container, Divider, Grid, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
+import useAuth from "../hooks/useAuth";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import HomeIcon from '@mui/icons-material/Home';
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -10,12 +10,13 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-
+import GroupIcon from '@mui/icons-material/Group';
 import  './dashboard.css'
-import DashBoardTittle from "./DashBoardTittle";
+import { ToastContainer } from "react-toastify";
 
-const DashBoard = () => {
-let {user}=useAuth()
+
+const DashBoardLayOut = () => {
+let {user,isAdmin,loading}=useAuth()
 let navigate=useNavigate()
 const handleGo=(to)=>{
   navigate(to)
@@ -27,10 +28,26 @@ let links=[{tittle:'Add pet',link:'add-pet',icon:AddCircleOutlineIcon},
 {tittle:'Create Donation Campaign',link:'create-donation-campaign',icon:AddTaskIcon},
 {tittle:'My Donation Campaigns',link:'my-donation-campaign',icon:VolunteerActivismIcon},
 {tittle:'My Donations',link:'my-donations',icon:CurrencyExchangeIcon}]
-
+if(loading){
+  return<Grid color='button' sx={{justifyContent:'center' , alignItems:'center', display:'flex',height:'100vh'}}>
+  
+  </Grid>
+ }
 
   return (
    <Grid  sx={{paddingY:4,background:'#f38005',paddingX:2,minHeight:'100vh'}}>
+     <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+pauseOnHover
+/>
+{/* Same as */}
+<ToastContainer />
    <Container sx={{display:'flex',justifyContent:'space-between',alignItems: 'center',}}>
    <Typography sx={{fontWeight:'bold',color:'#4c4e4f'}}>Dashboard</Typography>
     <Grid sx={{display:'flex',justifyContent:'center',alignItems:'center',gap:2,}}>
@@ -66,7 +83,18 @@ let links=[{tittle:'Add pet',link:'add-pet',icon:AddCircleOutlineIcon},
       </ListItemButton>
      </NavLink>
       )}
-      
+        <Divider sx={{paddingY:2}} />
+
+      {isAdmin?<NavLink  to='/dashboard/manageusers'>
+      <ListItemButton >
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary='Manage Users'/>
+      </ListItemButton>
+     </NavLink>:''}
+
+
     </List>
 
 
@@ -105,4 +133,4 @@ let links=[{tittle:'Add pet',link:'add-pet',icon:AddCircleOutlineIcon},
   );
 };
 
-export default DashBoard;
+export default DashBoardLayOut;

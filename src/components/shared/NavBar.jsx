@@ -135,7 +135,7 @@ console.log(user)
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-     <Avatar alt="Profile Photo" src={`${user?.photoURL}`} />
+     <Avatar alt="Profile Photo" src={`${user.photoURL}`} />
       </Button>:<Link to='/auth/login'><Button variant="outlined" color="button" sx={{border:'3px solid ',fontWeight:700,'&:hover':{border:'3px solid #D1A87D'}}}>Log In</Button></Link>}
       <Menu
         id="demo-positioned-menu"

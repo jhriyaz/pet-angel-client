@@ -55,7 +55,7 @@ let from=useLocation()?.state?.from
       let{name,email,password,photo}=values
 try{
   signUp(email,password).then(()=>{
-    updateProf(name,photo).then((data)=>{
+    updateProf(name,photo,photo).then((data)=>{
       console.log(data)
       if(from){
         navigate(from)

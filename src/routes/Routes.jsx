@@ -6,9 +6,14 @@ import DonationCampaigns from "../pages/DonationCampaigns/DonationCampaigns";
 import LogIn from "../pages/Auth/LogIn";
 import Register from "../pages/Auth/Register";
 
-import DashBoard from "../pages/dashboard/DashBoard";
+import DashBoardLayOut from "../layout/DashBoardLayOut";
 import PetListing from "../pages/pet/pet-listing/PetListing";
 import AddPet from "../pages/dashboard/addPet/addPet";
+import MyPets from "../pages/dashboard/MyPets/MyPets";
+import PrivateRoute from "./routecontrol/PrivateRoute";
+import PublicRoute from "./routecontrol/PublicRoute";
+import AdminRoute from "./routecontrol/AdminRoute";
+import ManageUSers from "../pages/dashboard/users/ManageUSers";
 
 const Routes = createBrowserRouter([
     {
@@ -20,28 +25,28 @@ const Routes = createBrowserRouter([
                 element:<Home></Home>
             },{
                 path: '/pet-listing',
-                element:<PetListing></PetListing>
+                element:<PrivateRoute><PetListing></PetListing></PrivateRoute>
             },{
                 path: '/donation-campaigns',
-                element:<DonationCampaigns></DonationCampaigns>
+                element:<PrivateRoute><DonationCampaigns></DonationCampaigns></PrivateRoute>
             },
         ]
     },{
         path:'/auth/login',
-        element:<LogIn></LogIn>
+        element:<PublicRoute><LogIn></LogIn></PublicRoute>
     },{
         path:'/auth/register',
-        element:<Register></Register>
+        element:<PublicRoute><Register></Register></PublicRoute>
     },{
         path:'/dashboard',
-        element:<DashBoard></DashBoard>,
+        element:<PrivateRoute><DashBoardLayOut></DashBoardLayOut></PrivateRoute>,
         children:[
             {
                 path: '/dashboard/add-pet',
-                element:<AddPet></AddPet>
+                element:<PrivateRoute><AddPet></AddPet></PrivateRoute>
             },{
                 path: '/dashboard/my-added-pets',
-                element:<>pets</>
+                element:<PrivateRoute><MyPets></MyPets></PrivateRoute>
             },{
                 path: '/dashboard/adoption-request',
                 element:<>request</>
@@ -54,7 +59,10 @@ const Routes = createBrowserRouter([
             },{
                 path: '/dashboard/my-donations',
                 element:<>donations</>
-            },
+            },{
+                path: '/dashboard/manageusers',
+                element:<AdminRoute><ManageUSers></ManageUSers> </AdminRoute>
+            }
         ]
     }
 ])
