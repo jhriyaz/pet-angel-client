@@ -5,8 +5,8 @@ import useAuth from "../../hooks/useAuth";
 const AdminRoute =({children}) => {
 
     let location = useLocation().pathname
-let {isAdmin,loading,user}=useAuth()
-   if (loading) {
+let {isAdmin,loading,isAdminLoading,user}=useAuth()
+   if (loading||isAdminLoading) {
     return <div className=" flex justify-center items-center pt-16"><span className="loading loading-spinner loading-lg"></span></div>
    }
     if (user&&isAdmin){

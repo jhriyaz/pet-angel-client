@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -26,24 +26,24 @@ let handleUser=id=>{
         <TableHead>
           <TableRow>
             <TableCell>Photo</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="right">center</TableCell>
+            <TableCell align="right">center</TableCell>
+            <TableCell align="right">center</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Users?.map((row) => (
+          {Users?.map((row,i) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.image}
+               
                 <Avatar alt="Remy Sharp" src={row.photo} />
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right"><Button disabled={row.role==='admin'?true:false} onClick={()=>handleUser(row._id)}> Make Admin</Button></TableCell>
+              <TableCell align="center">{row.name}</TableCell>
+              <TableCell align="center">{row.email}</TableCell>
+              <TableCell align="center"><Button disabled={row.role==='admin'?true:false} onClick={()=>handleUser(row._id)}> Make Admin</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -7,6 +7,7 @@ import { RotateSpinner } from "react-spinners-kit";
 import { auth } from "../config/__firebase__config";
 import { Grid } from "@mui/material";
 import useAxiosIntercepter from "../hooks/useAxiosIntercepter";
+import { useQuery } from "react-query";
 
 
 
@@ -16,6 +17,7 @@ const gitProvider = new GithubAuthProvider();
 const AuthContext = ({ children }) => {
   let [user,setUser]=useState(null)
   let [loading,setLoading]=useState(true)
+ const [isAdminLoading,setIsAdminLoading]=useState(true)
  const [isAdmin,setIsAdmin]=useState(false)
 
 
@@ -56,10 +58,7 @@ const unSubscribe=onAuthStateChanged(auth,currentUser=>{
   setUser(currentUser)
   let  jwt= async()=>{
     await AxiosCustomSecure.post('/auth/jwt',{email:user.email}).then(data=>console.log(data?.data))
-    await AxiosCustomSecure.get('/auth/checkadmin').then(data=>{
-      setIsAdmin(data.data)
-     
-    })
+   
     setLoading(false)
    
    }
@@ -78,18 +77,29 @@ return ()=>{
 }
 },[user,AxiosCustomSecure])
 
+useEffect(()=>{
+  AxiosCustomSecure.get('/auth/checkadmin').then(data=>{
+    setIsAdmin(data.data)
+    setIsAdminLoading(false)
+     })
+},[AxiosCustomSecure])
+
+
+
+
+
+
+
+
+
 if(loading){
- return<HelmetProvider>
-    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading,isAdmin }}>
-    <Grid color='button' sx={{justifyContent:'center' , alignItems:'center', display:'flex',height:'100vh'}}>
+ return<Grid color='button' sx={{justifyContent:'center' , alignItems:'center', display:'flex',height:'100vh'}}>
   <RotateSpinner />
  </Grid>
-      </AuthInfo.Provider>
-  </HelmetProvider>
 }
 
   return (<HelmetProvider>
-    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading,isAdmin }}>
+    <AuthInfo.Provider value={{signInWithGoogle,signInWithGithub,signUp,user,logOut,updateProf,loading,signIn,setLoading,isAdmin,isAdminLoading }}>
       {children}
       </AuthInfo.Provider>
   </HelmetProvider>)
