@@ -3,30 +3,17 @@
   height: 100%;
   padding: 13px !important;
   margin: -13px !important;
-  padding: 13px !important;
+  padding-bottom: 39px !important;
 }
 
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.mySwiper {
-  position: static;
-}
 
 @media screen and (min-width: 325px) and (max-width: 1024px) {
   .mySwiper {
-    position: absolute;
-    padding-top: -90px;
+display: none;
   }
 }
 @media screen and (min-width: 1025px) {
   .mySwiper {
-    position: static;
-    padding-bottom: 30px;
+    display: block;
   }
 }

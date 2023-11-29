@@ -17,7 +17,7 @@ import LoadingRow from '../../../utils/LoadingRow';
 
 
 const PetCategory = () => {
-  let dasd=[1,2,432,2323,1,34,12,123]
+
 
   let AxiosCustomPublic=useAxiosPublic()
   let {data:categories,isLoading,isFetching} = useQuery(
@@ -53,9 +53,9 @@ const PetCategory = () => {
         }}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
-      >
+      >{categories?.map(category =><SwiperSlide key={category.category}><CategoryCard category={category.category} image={category.image} details={category.details}></CategoryCard></SwiperSlide>)}
    
-{categories?.map(category =><SwiperSlide key={category.category}><CategoryCard category={category.category} image={category.image} details={category.details}></CategoryCard></SwiperSlide>)}
+
 </Swiper>
 
 
@@ -66,6 +66,18 @@ const PetCategory = () => {
 
  
   </Container>
+
+
+<Container>
+<Grid container sx={{display:{lg:'none'}}} spacing={2}>
+{categories?.map(category => <Grid item sm={4} xs={6} md={3} key={category.category}>
+  <CategoryCard category={category.category} image={category.image} details={category.details}></CategoryCard>
+</Grid>)}
+</Grid>
+
+</Container>
+
+
   </Grid>);
 };
 

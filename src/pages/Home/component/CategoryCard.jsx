@@ -12,18 +12,15 @@ const CategoryCard = ({category,image,details}) => {
     navigate(`/pet-listing/${link}`)
   }
     return (
-        <Card>
-        <CardMedia
-          sx={{ height: 300 }}
-          image={image}
-          title={`${category} Image`}
-        />
+        <Card sx={{flexGrow:1}}>
+       
+        <img src={image} style={{ Height: 300,width:'100%' }} alt="gsgsdgs" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
            {category}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-           {details.slice(0,50)}
+           {details.slice(0,30)}
           </Typography>
         </CardContent>
         <CardActions sx={{display:'flex',justifyContent: 'center'}}>
