@@ -7,13 +7,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import SectionTittle from "../../../components/shared/SectionTittle";
+import { Link } from "react-router-dom";
 
 
 const CallToAction = () => {
 
     return (
         <>
-       <SectionTittle tittle="Change a Life, Adopt a Pet Today!" desc='Welcome to Our Community of Compassionate Pet Lovers
+       <SectionTittle tittle="Change a Life " desc='Adopt a Pet Today!
        '></SectionTittle>
 <Container sx={{overflow:'hidden', paddingBottom:'10px',paddingTop:'40px'}}>
 <Grid container spacing={6}>
@@ -124,7 +125,7 @@ Why Adopt?
 Start Your Journey.
 </Typography>
 <Grid sx={{marginX:'auto',justifyContent:'space-between',display:'flex',alignItems:'center',padding:'10px'}}>
-<Button variant="outlined" color="button">Explore Pets <ArrowRightIcon></ArrowRightIcon></Button> <AcUnitIcon sx={{color:'#f38005'}}></AcUnitIcon> <Button variant="outlined"color="button">Donate Our Cause <ArrowRightIcon></ArrowRightIcon></Button> 
+<Link to='/pet-listing'><Button variant="outlined" color="button">Explore Pets <ArrowRightIcon></ArrowRightIcon></Button></Link> <AcUnitIcon sx={{color:'#f38005'}}></AcUnitIcon><Link to='/donation-campaigns'><Button variant="outlined"color="button">Help A Pet <ArrowRightIcon></ArrowRightIcon></Button> </Link> 
 </Grid>
 <Typography sx={{color:'#f38005',textAlign:'center', paddingTop:'10px'}}>
 

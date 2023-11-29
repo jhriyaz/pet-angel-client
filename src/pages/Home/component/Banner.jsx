@@ -2,6 +2,7 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import banner from '../../../assets/images/banner.png'
 import bannerright from '../../../assets/images/bannerright.png'
 import PetsIcon from '@mui/icons-material/Pets';
+import { Link } from "react-router-dom";
 const Banner = () => {
     return (
 
@@ -13,7 +14,7 @@ const Banner = () => {
 <Grid item  lg={6} sx={{display:'grid',justifyContent: 'center',}}>
 <Typography sx={{color:'black',padding:'10px'}} gutterBottom variant="h2" fontWeight='800' >Pet Adoption</Typography>
 <Typography  sx={{color:'#9c9b9b' ,padding:'10px'}} gutterBottom variant="h6"  fontWeight='400' >Most of the animals available have had a terrible, cruel past. Yet their ability to forgive and love again is over whelming.</Typography>
-<Button  variant="contained" color="button" sx={{color:'white',fontWeight:'800',marginTop:'20px', paddingX:'20px',paddingY:'10px', width:'fit-content'}}><PetsIcon sx={{marginRight:'4px'}}></PetsIcon> Adopt</Button>
+<Link to='/pet-listing'><Button  variant="contained" color="button" sx={{color:'white',fontWeight:'800',marginTop:'20px', paddingX:'20px',paddingY:'10px', width:'fit-content'}}><PetsIcon sx={{marginRight:'4px'}}></PetsIcon> Adopt</Button></Link>
 </Grid>
 
 
