@@ -7,6 +7,8 @@ import PetsIcon from '@mui/icons-material/Pets';
 import { useQuery } from "react-query";
 import useAxiosIntercepter from "../../../hooks/useAxiosIntercepter";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import LoadingTable from "../../../utils/LoadingTable";
 const validationSchema = yup.object({
   image: yup.string("Enter Pet Image").required("Image is required"),
   name: yup
@@ -24,55 +26,78 @@ const validationSchema = yup.object({
     .required("Long description is required"),
 });
 
-const AddPet = () => {
-    let AxiosCustomSecure=useAxiosIntercepter()
-    let AxiosCustomPublic=useAxiosPublic()
-  const formik = useFormik({
-    initialValues: {
-      image: "",
-      name: "",
-      age: "",
-      category: "",
-      location: "",
-      short_description: "",
-      long_description: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
-   
-      try {
-        AxiosCustomSecure.post('/api/pets',values)
-        .then((data)=>{
-         if(data?.data){
-toast.success('Added Successfully')
-resetForm()
-}
-        })
-      } catch (error) {
-        console.error(error);
+
+
+const UpdatePet = () => {
+
+  let AxiosCustomSecure=useAxiosIntercepter()
+  let AxiosCustomPublic=useAxiosPublic()
+  let id=useParams().id
+
+
+
+
+
+  let {data:petData,isLoading,isFetching,refetch} = useQuery(
+    {
+      queryKey:['petUpdate'],
+      queryFn:async()=>{
+       let data= await AxiosCustomSecure.get(`/api/petget/${id}`)
+        return  data.data
       }
-    },
-  });
+    }
+  )
+
+
+
+const formik = useFormik({
+  initialValues: {
+    image: petData?.image,
+    name: petData?.name,
+    age: petData?.age,
+    category: petData?.category,
+    location: petData?.location,
+    short_description: petData?.short_description,
+    long_description: petData?.long_description,
+  },
+  validationSchema: validationSchema,
+  onSubmit: (values) => {
  
-    let {data:categories} = useQuery(
-          {
-            queryKey:['PetCategory'],
-            queryFn:async()=>{
-             let data= await AxiosCustomPublic.get('/api/categories')
-              return  data.data
-            }
+    try {
+      AxiosCustomSecure.patch(`/api/pets/${id}`,values)
+      .then((data)=>{
+       if(data?.data){
+toast.success('Update Successfully')
+refetch()
+}
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  },
+});
+
+  let {data:categories} = useQuery(
+        {
+          queryKey:['PetCategory'],
+          queryFn:async()=>{
+           let data= await AxiosCustomPublic.get('/api/categories')
+            return  data.data
           }
-        )
-  
-  
-
-  return (
+        }
+      )
 
 
-  
 
-    <Grid>
-      <DashBoardTittle tittle="Add A Pet"></DashBoardTittle>
+
+      if(isLoading||isFetching){
+        return <LoadingTable></LoadingTable>
+      }
+
+
+    return (
+      <Grid>
+      <DashBoardTittle tittle={`Update ${petData.name} Details`}></DashBoardTittle>
 
       <form onSubmit={formik.handleSubmit}>
         <Grid sx={{ display: "grid", gap: "7px", maxWidth: "800px" }}>
@@ -128,7 +153,7 @@ resetForm()
     error={formik.touched.category && Boolean(formik.errors.category)}
 
   >
-    {categories?.map(category =><MenuItem key={category.category} value= {category.category}>{category.category} </MenuItem>)}
+    {categories?.map(category =><MenuItem key={category.category} value= {category.category.toLowerCase()}>{category.category} </MenuItem>)}
   </Select>
 </FormControl>
 
@@ -176,7 +201,12 @@ resetForm()
         </Grid>
       </form>
     </Grid>
-  );
+    );
 };
 
-export default AddPet;
+export default UpdatePet;
+
+
+
+
+

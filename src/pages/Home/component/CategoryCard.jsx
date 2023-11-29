@@ -4,8 +4,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 const CategoryCard = ({category,image,details}) => {
+  let navigate=useNavigate()
+  const handleTo=link=>{
+    navigate(`/pet-listing/${link}`)
+  }
     return (
         <Card>
         <CardMedia
@@ -22,7 +27,7 @@ const CategoryCard = ({category,image,details}) => {
           </Typography>
         </CardContent>
         <CardActions sx={{display:'flex',justifyContent: 'center'}}>
-          <Button variant="outlined" color='button' sx={{fontWeight:'bold'}}>Check {category}</Button>
+          <Button onClick={()=>handleTo(category)} variant="outlined" color='button' sx={{fontWeight:'bold'}}>Check {category}</Button>
         </CardActions>
       </Card>
     );

@@ -1,5 +1,5 @@
 
-import { Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import DashBoardTittle from "../DashBoardTittle";
 import { useQuery } from "react-query";
 import useAxiosIntercepter from "../../../hooks/useAxiosIntercepter";
@@ -34,7 +34,19 @@ if(isLoadingPagrNUmber||isFetching||isLoading||isRefetching){
 }
 
 
+if(isLoading||isFetching){
+    return <LoadingTable></LoadingTable>
+}
 
+if(items.length<1){
+    return <Container>
+          <DashBoardTittle tittle='Adoption Request'></DashBoardTittle>
+
+        <Typography variant="h6" align="center" sx={{paddingTop:3}}>
+            You didn't add any pet!
+        </Typography>
+    </Container>
+}
 
 return (
      <Grid>

@@ -38,7 +38,7 @@ const PetCardStyle = ({pet}) => {
       </CardActionArea>
       <CardActions>
        <Link to={`/pet/${_id}`}>
-       <Button size="small" color="primary">
+       <Button size="small" color="button">
           Check Out
         </Button>
         </Link>
