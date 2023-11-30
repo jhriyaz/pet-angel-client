@@ -88,7 +88,7 @@ const AddCampaign = () => {
 
   return (
     <Container>
-      <DashBoardTittle tittle="Add A Pet"></DashBoardTittle>
+      <DashBoardTittle tittle="Add A Donation Campaign"></DashBoardTittle>
 
       {upLoadInput}
       {buttonToggle}

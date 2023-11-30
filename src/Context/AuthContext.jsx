@@ -7,8 +7,6 @@ import { RotateSpinner } from "react-spinners-kit";
 import { auth } from "../config/__firebase__config";
 import { Grid } from "@mui/material";
 import useAxiosIntercepter from "../hooks/useAxiosIntercepter";
-import { useQuery } from "react-query";
-
 
 
 export const AuthInfo = createContext(null);
@@ -57,7 +55,7 @@ useEffect(()=>{
 const unSubscribe=onAuthStateChanged(auth,currentUser=>{
   setUser(currentUser)
   let  jwt= async()=>{
-    await AxiosCustomSecure.post('/auth/jwt',{email:user.email}).then(data=>console.log(data?.data))
+    await AxiosCustomSecure.post('/auth/jwt',{email:user.email}).then(()=>{console.log('chilllll')})
    
     setLoading(false)
    

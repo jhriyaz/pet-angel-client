@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
-import DonationCampaigns from "../pages/DonationCampaigns/DonationCampaigns";
+
 
 import LogIn from "../pages/Auth/LogIn";
 import Register from "../pages/Auth/Register";
@@ -23,6 +23,8 @@ import AddCampaign from "../pages/DonationCampaigns/addCampaign/AddCampaign";
 import MyDonationCampaign from "../pages/DonationCampaigns/addCampaign/MydonationCampaign";
 import UpdateCampaign from "../pages/DonationCampaigns/addCampaign/UpdateCampaign";
 import axios from "axios";
+import DonationCampaigns from "../pages/pet/donationCampaign/DonationCampaigns";
+import ViewCampaign from "../pages/DonationCampaigns/addCampaign/ViewCampaign";
 
 
 
@@ -49,8 +51,9 @@ const Routes = createBrowserRouter([
                 path: '/donation-campaigns',
                 element:<PrivateRoute><DonationCampaigns></DonationCampaigns></PrivateRoute>
             },{
-                path: '/test',
-                element:<TestIng></TestIng>
+                path: '/campaign/:id',
+                loader:({params})=>axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/donation_campaign/${params.id}`,{withCredentials:true}),
+                element:<ViewCampaign></ViewCampaign>
             }
         ]
     },{

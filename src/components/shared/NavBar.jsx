@@ -29,7 +29,6 @@ const NavBar = (props) => {
 
 let{user,logOut}=useAuth()
 
-console.log(user)
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
