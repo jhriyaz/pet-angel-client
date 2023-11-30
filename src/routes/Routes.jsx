@@ -18,6 +18,12 @@ import PetListing from "../pages/pet/pet-listing/PetListing";
 import SinglePet from "../pages/pet/pet-listing/singlepet/SinglePet";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import AdoptionRequest from "../pages/dashboard/MyPets/adoptionRequest/AdoptionRequest";
+import TestIng from "../pages/TestIng";
+import AddCampaign from "../pages/DonationCampaigns/addCampaign/AddCampaign";
+import MyDonationCampaign from "../pages/DonationCampaigns/addCampaign/MydonationCampaign";
+import UpdateCampaign from "../pages/DonationCampaigns/addCampaign/UpdateCampaign";
+import axios from "axios";
+
 
 
 const Routes = createBrowserRouter([
@@ -42,7 +48,10 @@ const Routes = createBrowserRouter([
             },{
                 path: '/donation-campaigns',
                 element:<PrivateRoute><DonationCampaigns></DonationCampaigns></PrivateRoute>
-            },
+            },{
+                path: '/test',
+                element:<TestIng></TestIng>
+            }
         ]
     },{
         path:'/auth/login',
@@ -66,13 +75,17 @@ const Routes = createBrowserRouter([
                 element:<PrivateRoute><MyPets></MyPets></PrivateRoute>
             },{
                 path: '/dashboard/adoption-request',
-                element:<AdoptionRequest></AdoptionRequest>
+                element:<PrivateRoute><AdoptionRequest></AdoptionRequest></PrivateRoute>
             },{
                 path: '/dashboard/create-donation-campaign',
-                element:<>create</>
+                element:<PrivateRoute><AddCampaign></AddCampaign></PrivateRoute>
             },{
                 path: '/dashboard/my-donation-campaign',
-                element:<>campaign</>
+                element:<PrivateRoute><MyDonationCampaign></MyDonationCampaign></PrivateRoute>
+            },{
+                path:'/dashboard/updatecampaign/:id',
+                loader:({params})=>axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/donation_campaign/${params.id}`,{withCredentials:true}),
+                element:<PrivateRoute><UpdateCampaign></UpdateCampaign></PrivateRoute>
             },{
                 path: '/dashboard/my-donations',
                 element:<>donations</>

@@ -6,22 +6,25 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Avatar, Button, Grid } from '@mui/material';
+import {  Button, Grid } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import PetsIcon from '@mui/icons-material/Pets';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import useAxiosIntercepter from '../../../hooks/useAxiosIntercepter';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
-
-const MyPetsTable = ({pets,refetch,page,perPages,setSort,sort,refetchPetCount}) => {
+import PetsIcon from '@mui/icons-material/Pets';
+const MyPetsTable = ({pets,refetch,page,perPages,sort,setSort,refetchPetCount}) => {
   let AxiosCustomSecure=useAxiosIntercepter()
 
-const handleSort=()=>{
-  setSort(!sort)
-}
+
+
+
+  let handleSort=()=>{
+    setSort(sort)
+  }
+
 let handleDelete=(id,name)=>{
 
 
@@ -100,7 +103,7 @@ console.error(err)
 }
 
   return  (
-  <Grid  sx={{paddingX:1,paddingTop:1,justifyContent:'center', display:'flex',}}>
+  <Grid  sx={{paddingX:1,paddingTop:1,justifyContent:'center', display:'flex',overflow:'scroll'}}>
       <TableContainer component={Paper}>
       <Table sx={{ minWidth:'100%'}} aria-label="simple table">
         <TableHead>

@@ -60,9 +60,10 @@ pauseOnHover
     <Container>
 
 <Grid container sx={{paddingTop:'20px'}}>
-<Grid item lg={3} xs={6}>
+<Grid item lg={3} xs={12}>
+<Container>
 <List id='DashboardLinks'
-      sx={{ width: '100%', maxWidth: 360,height:'800px',background:'#dbd9d9' }}
+      sx={{ width: '100%', maxWidth: 360,background:'#dbd9d9' }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
@@ -96,31 +97,10 @@ pauseOnHover
 
 
     </List>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</Container>
 
 </Grid>
-<Grid item lg={9} xs={6} sx={{paddingLeft:2,paddingTop:2,background:'#dbd9d9'}}>
+<Grid item lg={9} xs={12} >
 
 <Outlet>
   

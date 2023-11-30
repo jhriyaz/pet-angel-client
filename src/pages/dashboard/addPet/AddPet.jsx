@@ -1,14 +1,15 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import DashBoardTittle from "../DashBoardTittle";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import PetsIcon from '@mui/icons-material/Pets';
 import { useQuery } from "react-query";
 import useAxiosIntercepter from "../../../hooks/useAxiosIntercepter";
 import { toast } from "react-toastify";
+import useImageUpload from "../../../hooks/useImageUpload";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+
 const validationSchema = yup.object({
-  image: yup.string("Enter Pet Image").required("Image is required"),
   name: yup
     .string("Enter pet name")
     .min(3, "name should be of minimum 3 characters length")
@@ -24,12 +25,17 @@ const validationSchema = yup.object({
     .required("Long description is required"),
 });
 
+
 const AddPet = () => {
     let AxiosCustomSecure=useAxiosIntercepter()
     let AxiosCustomPublic=useAxiosPublic()
+let{upLoadInput,buttonToggle,uploadedImage,resetImageData}=useImageUpload()
+
+
+
+    
   const formik = useFormik({
     initialValues: {
-      image: "",
       name: "",
       age: "",
       category: "",
@@ -39,19 +45,24 @@ const AddPet = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-   
-      try {
-        AxiosCustomSecure.post('/api/pets',values)
-        .then((data)=>{
-         if(data?.data){
-toast.success('Added Successfully')
-resetForm()
-}
-        })
-      } catch (error) {
-        console.error(error);
-      }
-    },
+
+
+     if(!uploadedImage){
+      return toast.error('upload Image')
+     }try {
+         AxiosCustomSecure.post('/api/pets',{...values,image:uploadedImage})
+         .then((data)=>{
+          
+          if(data?.data){
+ toast.success('Added Successfully')
+ resetForm()
+ resetImageData()
+ }
+         })
+       } catch (error) {
+         console.error(error);
+       }
+     },
   });
  
     let {data:categories} = useQuery(
@@ -71,22 +82,13 @@ resetForm()
 
   
 
-    <Grid>
+    <Container>
       <DashBoardTittle tittle="Add A Pet"></DashBoardTittle>
 
+{upLoadInput }
+ {buttonToggle}
       <form onSubmit={formik.handleSubmit}>
         <Grid sx={{ display: "grid", gap: "7px", maxWidth: "800px" }}>
-          <TextField
-            fullWidth
-            id="image"
-            name="image"
-            label="Pet Image"
-            value={formik.values.image}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.image && Boolean(formik.errors.image)}
-            helperText={formik.touched.image && formik.errors.image}
-          />
           <TextField
             fullWidth
             id="name"
@@ -175,7 +177,7 @@ resetForm()
           </Button>
         </Grid>
       </form>
-    </Grid>
+    </Container>
   );
 };
 

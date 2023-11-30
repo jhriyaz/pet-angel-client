@@ -5,8 +5,8 @@ import { useQuery } from "react-query";
 import useAxiosIntercepter from "../../../hooks/useAxiosIntercepter";
 import usePagiNation from "../../../hooks/usePagiNation";
 import { useEffect, useState } from "react";
-import MyPetsTable from "./MyPetsTable";
 import LoadingTable from "../../../utils/LoadingTable";
+import MyPetsTable from "./MyPetsTable";
 
 const MyPets = () => {
     let AxiosCustomSecure=useAxiosIntercepter()

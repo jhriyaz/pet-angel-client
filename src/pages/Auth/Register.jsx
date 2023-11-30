@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialSignIn from "../../components/shared/SocialSignIn";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import useImageUpload from "../../hooks/useImageUpload";
 
 const validationSchema = yup.object({
   name: yup
@@ -23,7 +24,7 @@ const validationSchema = yup.object({
     .required("Password is required")
     .matches(
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/,
-      "Password can only contain Latin letters."
+      "Password can only contain special letters."
     ),
   confirmPassword: yup
     .string()
@@ -36,7 +37,7 @@ const validationSchema = yup.object({
 
 const Register = () => {
   let navigate = useNavigate();
-
+  let{upLoadInput,buttonToggle,uploadedImage,resetImageData}=useImageUpload()
   let hanleLink = (to) => {
     navigate(to);
   };
@@ -47,22 +48,30 @@ let from=useLocation()?.state?.from
       name: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      photo:""
+      confirmPassword: ""
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      let{name,email,password,photo}=values
+      if(!uploadedImage){
+        return toast.error('upload Image')
+       }
+
+      let{name,email,password}=values
+
+      if(!uploadedImage){
+        return toast.error('upload Image')
+       }
 try{
   signUp(email,password).then(()=>{
-    updateProf(name,photo,photo).then((data)=>{
-      console.log(data)
+    updateProf(name,uploadedImage).then(()=>{
+    
       if(from){
         navigate(from)
       }else{
         navigate('/')
       }
       toast.success('Successful')
+      resetImageData()
     })
   })
 }catch(error){
@@ -119,8 +128,8 @@ try{
           <Grid sx={{ display: "grid", gap: "7px", maxWidth: "800px" }}>
 
 
-
-
+{upLoadInput}
+{buttonToggle}
 
             <TextField
               fullWidth
@@ -173,23 +182,7 @@ try{
                 formik.touched.confirmPassword && formik.errors.confirmPassword
               }
             />
- <TextField
-              fullWidth
-              id="photo"
-              name="photo"
-              label="link to yoor photo"
-              type="string"
-              value={formik.values.photo}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.photo &&
-                Boolean(formik.errors.photo)
-              }
-              helperText={
-                formik.touched.photo && formik.errors.photo
-              }
-            />
+
 
             <Typography
               sx={{ textAlign: "right", fontSize: "12px", paddingY: 1 }}

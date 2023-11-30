@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import DashBoardTittle from "../DashBoardTittle";
@@ -96,7 +96,7 @@ refetch()
 
 
     return (
-      <Grid>
+      <Container>
       <DashBoardTittle tittle={`Update ${petData.name} Details`}></DashBoardTittle>
 
       <form onSubmit={formik.handleSubmit}>
@@ -153,7 +153,7 @@ refetch()
     error={formik.touched.category && Boolean(formik.errors.category)}
 
   >
-    {categories?.map(category =><MenuItem key={category.category} value= {category.category.toLowerCase()}>{category.category} </MenuItem>)}
+    {categories?.map(category =><MenuItem key={category.category} value= {category.category}>{category.category} </MenuItem>)}
   </Select>
 </FormControl>
 
@@ -196,11 +196,11 @@ refetch()
           />
 
           <Button color="button" variant="contained" fullWidth type="submit" sx={{display:'flex',gap:1,justifyContent:'center',alignItems: 'center',fontSize:18,fontWeight:'bold'}}>
-            <PetsIcon></PetsIcon>Add Pet
+            <PetsIcon></PetsIcon>Update Pet
           </Button>
         </Grid>
       </form>
-    </Grid>
+    </Container>
     );
 };
 
