@@ -3,6 +3,7 @@ import NavBar from "../components/shared/NavBar";
 import { Grid } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../components/shared/Footer";
 
 const MainLayout = () => {
     return (
@@ -22,6 +23,8 @@ pauseOnHover
 />
 {/* Same as */}
 <ToastContainer />
+
+<Footer></Footer>
         </Grid>
     );
 };

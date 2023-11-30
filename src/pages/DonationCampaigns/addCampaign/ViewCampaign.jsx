@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
-import {  useLoaderData, useNavigate, useParams } from "react-router-dom";
+import {  useLoaderData} from "react-router-dom";
 import { Box, Container,  Grid,  Modal,  TextField,  Typography } from "@mui/material";
-import * as yup from "yup";
 import Card from '@mui/material/Card';
 import CloseIcon from '@mui/icons-material/Close';
 import CardContent from '@mui/material/CardContent';
@@ -15,6 +14,10 @@ import moment from "moment";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import Payment from "../../../components/Payment/Payment";
+import SectionTittle from "../../../components/shared/SectionTittle";
+import useAxiosIntercepter from "../../../hooks/useAxiosIntercepter";
+import SharedDonationTable from "../../../components/shared/SharedDonationTable";
+import LoadingTable from "../../../utils/LoadingTable";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_KEY);
 
@@ -68,14 +71,20 @@ if(!isNaN(e.target.value)){
    return setDonation(e.target.value)
 }setError('Enter valid Number')
     }
-let {user}=useAuth()
 let donationCamp=useLoaderData().data
-
+const AxiosCustomSecure= useAxiosIntercepter()
 
 
 let{image,name,campaignEndDate,short_description,long_description,publishDate,_id}=donationCamp||{}
 
 
+let {data:TopDonationcam,isLoading,isFetching}=useQuery({
+    queryKey:['topdonationcam'],
+    queryFn:async()=>{
+        let data=await AxiosCustomSecure.get(`/api/campaign/donations/${_id}`)
+        return data.data
+    }
+})
 
 
 
@@ -159,13 +168,29 @@ let{image,name,campaignEndDate,short_description,long_description,publishDate,_i
     
     </Card>
     <Grid  container sx={{display:'grid',justifyContent:'start',alignItems:'center',paddingY:4}}>
-<TextField type="number" label="Donate Amount" size="small" defaultValue={donation} onChange={handleDonation} >
+<TextField type="number" label="Donate Amount" size="small" value={donation} defaultValue={donation} onChange={handleDonation} >
 
 </TextField>
 <Typography variant='p' sx={{color:'red'}}>{error}</Typography>
   
     {donation?<Button size="small"  color="button" onClick={handleOpen} variant="outlined" sx={{marginY:2}}>Donate</Button>:<Button size="small"  disabled  color="button" variant="outlined" sx={{marginY:2}}>Donate</Button>}
 </Grid>
+
+
+
+
+<Container sx={{paddingTop:'100px'}}>
+<SectionTittle tittle={'Top Donations of this campaign'} id="topDonations" desc={'Some wonderful people came with blessing'}></SectionTittle>
+
+
+        {isLoading||isFetching?<LoadingTable></LoadingTable>:   <SharedDonationTable donation={TopDonationcam}></SharedDonationTable>}
+
+      </Container>
+
+
+
+
+
       </Container>
     );
 };

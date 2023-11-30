@@ -73,10 +73,10 @@ const handleSubmit=async(e)=>{
             donationCampaign: donate
         }
 
-        const result = await AxiosCustomSecure.post('/donations', payment);
+        const result = await AxiosCustomSecure.post('/api/donations', payment);
         console.log('payment saved', result.data);
      
-        if (result.data?.data) {
+        if (result.data) {
            toast.success('donation Success')
            handleAfterPayment()
         }

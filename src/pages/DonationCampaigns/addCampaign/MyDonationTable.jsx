@@ -113,7 +113,7 @@ console.error(err)
 
               </Grid>
               </TableCell>
-              <TableCell  align="center"><Button>Check Donators</Button> </TableCell>
+              <TableCell  align="center"><Link to={`/campaign/${row._id}/#topDonations`}><Button>Check Donators</Button></Link> </TableCell>
             </TableRow>
           ))}
         </TableBody>
