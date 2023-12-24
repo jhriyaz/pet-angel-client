@@ -76,11 +76,12 @@ return ()=>{
 },[user,AxiosCustomSecure])
 
 useEffect(()=>{
+  setIsAdminLoading(true)
   AxiosCustomSecure.get('/auth/checkadmin').then(data=>{
     setIsAdmin(data.data)
     setIsAdminLoading(false)
      })
-},[AxiosCustomSecure])
+},[AxiosCustomSecure,user])
 
 
 

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import {  useLoaderData} from "react-router-dom";
+import {  useLoaderData, useParams} from "react-router-dom";
 import { Box, Container,  Grid,  Modal,  TextField,  Typography } from "@mui/material";
 import Card from '@mui/material/Card';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,7 +8,6 @@ import CardMedia from '@mui/material/CardMedia';
 import { Button, CardActionArea } from '@mui/material';
 import { useState } from "react";
 
-import useAuth from "../../../hooks/useAuth";
 import moment from "moment";
 
 import {Elements} from '@stripe/react-stripe-js';
@@ -47,6 +46,11 @@ const ViewCampaign = () => {
     const [open, setOpen] = useState(false);
     const[donation,setDonation]=useState(null);
     const[error,setError]=useState(null);
+
+const id=useParams().id
+
+
+
     const handleOpen = () => {
         if(isNaN(donation)){
             setError('Enter valid Number')
@@ -57,15 +61,9 @@ const ViewCampaign = () => {
     const handleClose = () => setOpen(false);
 
 
-    let handleAfterPayment=()=>{
-        setOpen(false)
-        setDonation(null)
-        setError(null)
-    }
+ 
 
     const handleDonation=(e)=>{
-
-     
 if(!isNaN(e.target.value)){
     setError('')
    return setDonation(e.target.value)
@@ -78,15 +76,20 @@ const AxiosCustomSecure= useAxiosIntercepter()
 let{image,name,campaignEndDate,short_description,long_description,publishDate,_id}=donationCamp||{}
 
 
-let {data:TopDonationcam,isLoading,isFetching}=useQuery({
+let {data:TopDonationcam,isLoading,isFetching,refetch:fetchTable}=useQuery({
     queryKey:['topdonationcam'],
     queryFn:async()=>{
-        let data=await AxiosCustomSecure.get(`/api/campaign/donations/${_id}`)
+        let data=await AxiosCustomSecure.get(`/api/campaign/donations/${id}`)
         return data.data
     }
 })
 
-
+let handleAfterPayment=()=>{
+  setOpen(false)
+  setDonation(null)
+  setError(null)
+  fetchTable()
+}
 
     let pubLIsh =moment(publishDate).format("MMM Do YY")
     let EndDate= moment(campaignEndDate).format("MMM Do YY")
@@ -173,7 +176,7 @@ let {data:TopDonationcam,isLoading,isFetching}=useQuery({
 </TextField>
 <Typography variant='p' sx={{color:'red'}}>{error}</Typography>
   
-    {donation?<Button size="small"  color="button" onClick={handleOpen} variant="outlined" sx={{marginY:2}}>Donate</Button>:<Button size="small"  disabled  color="button" variant="outlined" sx={{marginY:2}}>Donate</Button>}
+    {donation?<Button size="small" color="button" onClick={handleOpen} variant="outlined" sx={{marginY:2}}>Donate</Button>:<Button size="small"  disabled  color="button" variant="outlined" sx={{marginY:2}}>Donate</Button>}
 </Grid>
 
 

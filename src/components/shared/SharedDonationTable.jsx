@@ -1,7 +1,13 @@
-import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import Paper from '@mui/material/Paper';
 const SharedDonationTable = ({donation}) => {
  
+
+
+
+  if(donation.length <1) {
+return<Typography sx={{textAlign:'center'}}>No Donations</Typography>
+  }
     return (
         <Grid  sx={{paddingX:1,paddingY:2, paddingTop:1,justifyContent:'center', display:'flex',overflowX:'auto'}}>
         <TableContainer component={Paper}>

@@ -18,8 +18,6 @@ const handlePageNumber = (event, newPage) => {
 
   window.scrollTo({ top: 20, left: 0, behavior: 'smooth' })
   setpageNumber(newPage)
-
-
 };
 
 let {data:items,isLoading,isRefetching,refetch}=useQuery({
